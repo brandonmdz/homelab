@@ -8,7 +8,7 @@ services:
       - TZ=America/Argentina/Buenos_Aires
     volumes:
       - /home/docker/jellyfin/config:/config
-      - /home/docker/media:/media
+      - /media/disks:/media
     ports:
       - "8096:8096"
       - "8920:8920"
