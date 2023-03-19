@@ -1,0 +1,35 @@
+version: '3'
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: always
+    environment:
+      - TZ=America/Argentina/Buenos_Aires
+    volumes:
+      - /home/docker/jellyfin/config:/config
+      - /home/docker/media:/media
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+    networks:
+      - jellyfin-net
+
+  minecraft:
+    image: itzg/minecraft-server:latest
+    container_name: minecraft
+    restart: always
+    environment:
+      - EULA=TRUE
+    volumes:
+      - /home/docker/minecraft/data:/data
+    ports:
+      - "25565:25565"
+    networks:
+      - minecraft-net
+
+networks:
+  jellyfin-net:
+    driver: bridge
+  minecraft-net:
+    driver: bridge
