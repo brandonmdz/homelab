@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+
+  minecraft:
+    image: itzg/minecraft-server
+    ports:
+      - 25565:25565
+    volumes:
+      - /home/docker/minecraft/data:/data
+    environment:
+      EULA: 'TRUE'
+      VERSION: 'latest'
+    restart: unless-stopped
+
+  minecraft-overviewer:
+    image: marctv/minecraft-overviewer
+    ports:
+      - 25575:25575
+    volumes:
+      - /home/docker/minecraft/data:/data
+      - /home/docker/minecraft/minecraft_map:/output
+    command: ["/input/world", "/output"]
+    restart: unless-stopped
+
+volumes:
+  minecraft_data:
+  minecraft_map:

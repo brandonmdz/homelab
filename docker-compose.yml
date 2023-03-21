@@ -1,27 +1,6 @@
 version: '3.8'
 services:
 
-  minecraft:
-    image: itzg/minecraft-server
-    ports:
-      - 25565:25565
-    volumes:
-      - /home/docker/minecraft/data:/data
-    environment:
-      EULA: 'TRUE'
-      VERSION: 'latest'
-    restart: unless-stopped
-
-  minecraft-overviewer:
-    image: marctv/minecraft-overviewer
-    ports:
-      - 25575:25575
-    volumes:
-      - /home/docker/minecraft/data:/data
-      - /home/docker/minecraft/minecraft_map:/output
-    command: ["/input/world", "/output"]
-    restart: unless-stopped
-
   plex:
     image: plexinc/pms-docker
     ports:
@@ -31,17 +10,8 @@ services:
       - /home/docker/plex/transcode:/transcode
       - /media/disks:/data
     environment:
-      PLEX_CLAIM: 'my-claimcode'
+      PLEX_CLAIM: 'claim-H1A4sGEANzmnpQjDkTk1'
       TZ: "America/Argentina/Buenos_Aires"
-    restart: unless-stopped
-
-  photonix:
-    image: photonixapp/photonix
-    ports:
-      - 5432:5432
-    volumes:
-      - /home/docker/phototonix/photonix_data:/config
-      - /media/disks/files:/photos
     restart: unless-stopped
 
   portainer:
@@ -75,13 +45,9 @@ services:
 
 
 volumes:
-  minecraft_data:
-  minecraft_map:
   plex_data:
   plex_transcode:
   plex_media:
-  photonix_data:
-  photonix_media:
   portainer_data:
   homeassistant_data:
   tautulli:
