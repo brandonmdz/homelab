@@ -1,35 +1,84 @@
-version: '3'
+version: '3.8'
 services:
-  jellyfin:
-    image: jellyfin/jellyfin:latest
-    container_name: jellyfin
-    restart: always
-    environment:
-      - TZ=America/Argentina/Buenos_Aires
-    volumes:
-      - /home/docker/jellyfin/config:/config
-      - /media/disks:/media
-    ports:
-      - "8096:8096"
-      - "8920:8920"
-    networks:
-      - jellyfin-net
 
   minecraft:
-    image: itzg/minecraft-server:latest
-    container_name: minecraft
-    restart: always
-    environment:
-      - EULA=TRUE
+    image: itzg/minecraft-server
+    ports:
+      - 25565:25565
     volumes:
       - /home/docker/minecraft/data:/data
-    ports:
-      - "25565:25565"
-    networks:
-      - minecraft-net
+    environment:
+      EULA: 'TRUE'
+      VERSION: 'latest'
+    restart: unless-stopped
 
-networks:
-  jellyfin-net:
-    driver: bridge
-  minecraft-net:
-    driver: bridge
+  minecraft-overviewer:
+    image: marctv/minecraft-overviewer
+    volumes:
+      - /home/docker/minecraft/data:/data
+      - /home/docker/minecraft/minecraft_map:/output
+    command: ["/input/world", "/output"]
+    restart: unless-stopped
+
+  plex:
+    image: plexinc/pms-docker
+    ports:
+      - 32400:32400
+    volumes:
+      - /home/docker/plex/plex_data:/config
+      - /home/docker/plex/transcode:/transcode
+      - /media/disks:/data
+    environment:
+      PLEX_CLAIM: 'my-claimcode'
+      TZ: "America/Argentina/Buenos_Aires"
+    restart: unless-stopped
+
+  photonix:
+    image: photonixapp/photonix
+    ports:
+      - 80:80
+    volumes:
+      - /home/docker/phototonix/photonix_data:/config
+      - /media/disks/files:/photos
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer-ce
+    ports:
+      - 9000:9000
+    volumes:
+      - /home/docker/portainer/portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+  home-assistant:
+    image: homeassistant/home-assistant
+    ports:
+      - 8123:8123
+    volumes:
+      - /home/docker/home_assistant/homeassistant_data:/config
+    restart: unless-stopped
+
+  tautulli:
+    image: linuxserver/tautulli
+    ports:
+      - 8181:8181
+    volumes:
+      - /home/docker/tautulli:/config
+    environment:
+      TZ: "America/Argentina/Buenos_Aires"
+      PUID: "1000"
+      PGID: "1000"
+    restart: unless-stopped
+
+
+volumes:
+  minecraft_data:
+  minecraft_map:
+  plex_data:
+  plex_transcode:
+  plex_media:
+  photonix_data:
+  photonix_media:
+  portainer_data:
+  homeassistant_data:
+  tautulli:
