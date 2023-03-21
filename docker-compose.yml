@@ -14,6 +14,8 @@ services:
 
   minecraft-overviewer:
     image: marctv/minecraft-overviewer
+    ports:
+      - 25575:25575
     volumes:
       - /home/docker/minecraft/data:/data
       - /home/docker/minecraft/minecraft_map:/output
@@ -36,7 +38,7 @@ services:
   photonix:
     image: photonixapp/photonix
     ports:
-      - 80:80
+      - 5432:5432
     volumes:
       - /home/docker/phototonix/photonix_data:/config
       - /media/disks/files:/photos
