@@ -1,0 +1,16 @@
+version: "3"
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    container_name: photoprism
+    restart: always
+    ports:
+      - "2342:2342"
+    volumes:
+      - /media/disks/files:/photoprism/originals
+      - /home/docker/photoprism:/photoprism/storage
+    environment:
+      PHOTOPRISM_ADMIN_USER: "admin"
+      PHOTOPRISM_ADMIN_PASSWORD: "my-password"
+      PHOTOPRISM_AUTH_MODE: "password"
+     

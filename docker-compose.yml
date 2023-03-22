@@ -10,7 +10,7 @@ services:
       - /home/docker/plex/transcode:/transcode
       - /media/disks:/data
     environment:
-      PLEX_CLAIM: 'claim-H1A4sGEANzmnpQjDkTk1'
+      PLEX_CLAIM: 'claim-key'
       TZ: "America/Argentina/Buenos_Aires"
     restart: unless-stopped
 
