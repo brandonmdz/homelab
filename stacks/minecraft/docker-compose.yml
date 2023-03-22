@@ -17,11 +17,7 @@ services:
     ports:
       - 25575:25575
     volumes:
-      - /home/docker/minecraft/data:/data
+      - /home/docker/minecraft/data:/data/world
       - /home/docker/minecraft/minecraft_map:/output
     command: ["/input/world", "/output"]
     restart: unless-stopped
-
-volumes:
-  minecraft_data:
-  minecraft_map:
